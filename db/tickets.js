@@ -1,6 +1,6 @@
 const db = require('./connection');
 
- const tickets = db.get('tickets');
+const tickets = db.collection('tickets');
 
  function getAll () {
    return tickets.find();
