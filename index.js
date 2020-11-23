@@ -42,7 +42,7 @@ app.post('/api/tickets', (req, res) => {
 
 const users = require('./db/users');
 
-app.get('/api/users?email=<some_email>&password=<some_password>', (req, res) => {
+app.get('/api/users', (req, res) => {
   const userRequest = {email: req.query.email, password: req.query.password}
   users.countUsers(userRequest).then(data => {
     res.json(data);
