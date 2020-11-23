@@ -2,8 +2,8 @@ const db = require('./connection');
 
 const tickets = db.collection('tickets');
 
- function getAll () {
-   return tickets.find();
+ async function getAll (email) {
+   return [...tickets.find({email:email}), ...tickets.find({email_to:email})];
  }
 
  function create (ticket) {
