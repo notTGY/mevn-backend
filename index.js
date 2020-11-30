@@ -79,7 +79,7 @@ app.post('/api/tickets', async (req, res) => {
 app.get('/api/users', async (req, res) => {
   const userRequest = {email: req.query.email, password: req.query.password};
 
-  users.countUsers(userRequest).then(async data => {
+  users.countUsers(userRequest).then(async (data) => {
     if (data.length == 1) {
       const newToken = await sessions.createNewSession(userRequest.email);
       res.status(201);
@@ -90,9 +90,6 @@ app.get('/api/users', async (req, res) => {
       res.json({message:'Invalid data'});
       return 1;
     }
-  }).catch(err => {
-    res.status(500);
-    res.json(err);
   });
 });
 

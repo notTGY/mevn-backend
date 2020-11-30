@@ -3,7 +3,7 @@ const db = require('./connection');
 const users = db.collection('users');
 
 async function countUsers (e) {
-  let res = await users.find(e).toArray();
+  let res = await users.find(e);
   return res;
 }
 
