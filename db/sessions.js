@@ -25,8 +25,6 @@ async function checkPermissionToReadTicket(token) {
     return 0;
   }
 
-  return 'admin@admin.com';
-
   return cache.email;
 }
 

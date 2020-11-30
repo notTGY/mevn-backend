@@ -21,7 +21,7 @@ app.get('/api/tickets', async (req, res) => {
 
   if (!email) {
     res.status(500);
-    res.json({message:'Invalid token'});
+    res.json({message:'Invalid token'+email});
     return 1;
   }
 
