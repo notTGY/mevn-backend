@@ -29,15 +29,15 @@ async function checkPermissionToReadTicket(token) {
 }
 
 async function checkPermissionToCreateTicket(token) {
-  const cashe = sessions.findOne({token:token});
-  if (cashe === {}) {
+  const cache = sessions.findOne({token:token});
+  if (cache == {}) {
     return 0;
   }
   const now = (new Date()).getTime();
-  if (cashe.finish_time < now) {
+  if (cache.finish_time < now) {
     return 0;
   }
-  return cashe.email;
+  return cache.email;
 }
 
 

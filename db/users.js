@@ -3,7 +3,7 @@ const db = require('./connection');
 const users = db.collection('users');
 
 function countUsers (e) {
-  return users.find({email:e.email,password:e.password});
+  return users.find(e);
 }
 
 function countUsersByEmail (e) {
