@@ -21,15 +21,14 @@ app.get('/api/tickets', async (req, res) => {
 
   if (!email) {
     res.status(500);
-    res.json({message:'Invalid token'+email});
+    res.json({message:'Invalid token '+email});
     return 1;
   }
 
   tickets.getAll(email).then(data => {
+    res.status(200);
     res.json(data);
-  }).catch(err => {
-    res.status(500);
-    res.json(error);
+    return 0;
   });
 });
 

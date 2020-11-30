@@ -3,7 +3,10 @@ const db = require('./connection');
 const tickets = db.collection('tickets');
 
  async function getAll (email) {
-   return [...tickets.find({email:email}), ...tickets.find({email_to:email})];
+   const a1 = await tickets.find({email:email});
+   const a2 = await tickets.find({email_to:email});
+   const arr = [...a1, ...a2];
+   return arr;
  }
 
  function create (ticket) {
