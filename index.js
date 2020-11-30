@@ -83,6 +83,7 @@ app.get('/api/users', async (req, res) => {
     if (data == 1) {
       const newToken = await sessions.createNewSession(userRequest.email);
       res.json(newToken);
+      return 0;
     } else {
       res.status(500);
       res.json({message:'Invalid data'});
