@@ -80,8 +80,9 @@ app.post('/api/tickets', async (req, res) => {
 app.get('/api/users', async (req, res) => {
   const userRequest = {email: req.query.email, password: req.query.password}
   users.countUsers(userRequest).then(async data => {
-    if (data == 1) {
+    if (data.length == 1) {
       const newToken = await sessions.createNewSession(userRequest.email);
+      res.status(201);
       res.json(newToken);
       return 0;
     } else {
@@ -105,7 +106,7 @@ app.get('/api/usersReg', async (req, res) => {
     return 1;
   }
   const sum = await users.countUsersAsync(json.email.trim());
-  if (sum != 0) {
+  if (sum.length != 0) {
     res.status(500);
     res.json({message:'Invalid data'});
     return 2;
@@ -115,8 +116,9 @@ app.get('/api/usersReg', async (req, res) => {
     email:json.email.trim(),
     password:json.password.trim()
   };
-  users.create(newUser).then(data => {
-    const token = '';
+  users.create(newUser).then(async data => {
+    const token = await sessions.createNewSession(json.email.trim());
+    res.status(200);
     res.json(token);
   }).catch(err => {
     res.status(500);
