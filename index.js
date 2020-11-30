@@ -81,13 +81,6 @@ app.get('/api/users', async (req, res) => {
   const userRequest = {email: req.query.email, password: req.query.password};
 
   /* DEBUG */
-  res.status(200);
-  res.json({message: userRequest});
-  return 0;
-  /* END OF DEBUG */
-
-
-  /* DEBUG */
   users.countUsers(userRequest).then(async data => {
     res.status(200);
     res.json(data);
