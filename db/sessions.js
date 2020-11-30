@@ -21,7 +21,7 @@ async function checkPermissionToReadTicket(token) {
   }
 
   const now = (new Date()).getTime();
-  if (cache.finish_time < now) {
+  if (cache.finish_time > now) {
     return 0;
   }
 
