@@ -60,7 +60,7 @@ app.post('/api/tickets', async (req, res) => {
   const token = json.token;
 
   const cashe = await sessions.checkPermissionToCreateTicket(token);
-  if (cashe == '') {
+  if (!cashe) {
     res.status(500);
     res.json({message:'Invalid token'});
     return 3;

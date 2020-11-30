@@ -16,7 +16,7 @@ async function createNewSession(email) {
 async function checkPermissionToReadTicket(token) {
   const cache = await  sessions.findOne({token:token});
 
-  if (cache === {}) {
+  if (cache === {} || cache == null) {
     return 0;
   }
 
