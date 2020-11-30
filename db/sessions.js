@@ -25,7 +25,7 @@ async function checkPermissionToReadTicket(token) {
     return 0;
   }
 
-  return cache.email;
+  return cache;
 }
 
 async function checkPermissionToCreateTicket(token) {
