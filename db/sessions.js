@@ -3,11 +3,10 @@ const db = require('./connection');
 const sessions = db.collection('sessions');
 
 async function createNewSession(email) {
-  let token = '';
   const start = (new Date()).getTime();
-  const finish = start + 60 * 60;
+  const finish = start + 60 * 60 * 1000;
 
-  token += start + email + finish;
+  const token = '' + start + email + finish;
 
   const session = {token: token, email:email, finish_time:finish}
   sessions.insert(session);
@@ -22,7 +21,7 @@ async function checkPermissionToReadTicket(token) {
   }
 
   const now = (new Date()).getTime();
-  if (cache.finish < now) {
+  if (cache.finish_time < now) {
     return 0;
   }
 
@@ -35,7 +34,7 @@ async function checkPermissionToCreateTicket(token) {
     return 0;
   }
   const now = (new Date()).getTime();
-  if (cashe.finish < now) {
+  if (cashe.finish_time < now) {
     return 0;
   }
   return cashe.email;
