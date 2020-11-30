@@ -80,28 +80,6 @@ app.post('/api/tickets', async (req, res) => {
 app.get('/api/users', async (req, res) => {
   const userRequest = {email: req.query.email, password: req.query.password};
 
-  /* DEBUG */
-  users.countUsers(userRequest).then(async data => {
-    res.status(200);
-    res.json(data);
-    return 0;
-  });
-  return 0;
-  /* END OF DEBUG */
-
-
-  /* DEBUG */
-  users.countUsers(userRequest).then(async data => {
-    const newToken = await sessions.createNewSession(userRequest.email);
-    res.status(200);
-    res.json(newToken);
-    return 0;
-  });
-  return 0;
-  /* END OF DEBUG */
-
-
-
   users.countUsers(userRequest).then(async data => {
     if (data.length == 1) {
       const newToken = await sessions.createNewSession(userRequest.email);

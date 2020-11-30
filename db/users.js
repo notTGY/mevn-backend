@@ -2,8 +2,9 @@ const db = require('./connection');
 
 const users = db.collection('users');
 
-function countUsers (e) {
-  return users.find(e);
+async function countUsers (e) {
+  let res = await users.find(e).toArray();
+  return res;
 }
 
 function countUsersByEmail (e) {
