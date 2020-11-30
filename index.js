@@ -16,6 +16,12 @@ app.get('/api/tickets', async (req, res) => {
 
   const email = await sessions.checkPermissionToReadTicket(token);
 
+  if (!email) {
+    res.status(500);
+    res.json({message:'Invalid token'});
+    return 1;
+  }
+
   tickets.getAll(email).then(data => {
     res.json(data);
   }).catch(err => {

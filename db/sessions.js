@@ -15,18 +15,18 @@ async function createNewSession(email) {
 }
 
 async function checkPermissionToReadTicket(token) {
-  const cashe = sessions.findOne({token:token});
+  const cache = sessions.findOne({token:token});
 
-  if (cashe === {}) {
+  if (cache === {}) {
     return 0;
   }
 
   const now = (new Date()).getTime();
-  if (cashe.finish < now) {
+  if (cache.finish < now) {
     return 0;
   }
 
-  return cashe.email;
+  return cache.email;
 }
 
 async function checkPermissionToCreateTicket(token) {
