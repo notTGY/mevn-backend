@@ -33,6 +33,28 @@ app.get('/api/tickets', async (req, res) => {
 });
 
 
+app.get('/api/ticketsUpdate', async (req, res) => {
+  const token = req.query.token;
+  const action = req.query.action;
+
+  const email = await sessions.checkPermissionToReadTicket(token);
+
+  if (!email) {
+    res.status(500);
+    res.json({message:'Invalid token '+email});
+    return 1;
+  }
+
+  tickets.getAll(email).then(data => {
+    res.status(200);
+    res.json(data);
+    return 0;
+  });
+});
+
+
+
+
 app.post('/api/tickets', async (req, res) => {
   const json = req.body;
   const token = json.token;
