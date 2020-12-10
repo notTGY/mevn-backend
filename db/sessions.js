@@ -29,7 +29,7 @@ async function checkPermissionToReadTicket(token) {
 }
 
 async function checkPermissionToCreateTicket(token) {
-  const cache = sessions.findOne({token:token});
+  const cache = await sessions.findOne({token:token});
   if (cache == {}) {
     return 0;
   }
