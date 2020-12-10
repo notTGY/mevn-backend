@@ -93,7 +93,7 @@ app.post('/api/tickets', async (req, res) => {
     res.json(data);
   }).catch(err => {
     res.status(500);
-    res.json(err);
+    res.json({message:'Failed to create ticket'});
   });
 });
 
