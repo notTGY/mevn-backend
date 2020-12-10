@@ -20,8 +20,8 @@ const tickets = db.collection('tickets');
    return arr;
  }
 
- function create (ticket) {
-   return tickets.insert(ticket);
+ async function create (ticket) {
+   await tickets.insert(ticket);
  }
 
  module.exports = {
