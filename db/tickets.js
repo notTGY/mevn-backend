@@ -13,8 +13,6 @@ const tickets = db.collection('tickets');
      e.isYours = false;
    });
 
-   console.log(a1, a2);
-
 
    const arr = [...a1, ...a2];
    return arr;

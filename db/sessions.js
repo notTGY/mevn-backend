@@ -30,7 +30,8 @@ async function checkPermissionToReadTicket(token) {
 
 async function checkPermissionToCreateTicket(token) {
   const cache = await sessions.findOne({token:token});
-  if (cache == {}) {
+
+  if (cache == {} || cache == null) {
     return 0;
   }
   const now = (new Date()).getTime();

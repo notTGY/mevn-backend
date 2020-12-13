@@ -13,7 +13,6 @@ const users = require('./db/users');
 const tickets = require('./db/tickets');
 
 
-
 app.get('/api/tickets', async (req, res) => {
   const token = req.query.token;
 
@@ -27,6 +26,7 @@ app.get('/api/tickets', async (req, res) => {
 
   tickets.getAll(email).then(data => {
     res.status(200);
+    console.log(data);
     res.json(data);
     return 0;
   });
@@ -57,9 +57,11 @@ app.get('/api/ticketsUpdate', async (req, res) => {
 
 app.post('/api/tickets', async (req, res) => {
   const json = req.body;
-  const token = json.token;
+  const token = req.body.token;
+
 
   const cashe = await sessions.checkPermissionToCreateTicket(token);
+
   if (!cashe) {
     res.status(500);
     res.json({message:'Invalid token'});
