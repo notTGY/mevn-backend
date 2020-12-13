@@ -26,30 +26,26 @@ app.get('/api/tickets', async (req, res) => {
 
   tickets.getAll(email).then(data => {
     res.status(200);
-    console.log(data);
     res.json(data);
     return 0;
   });
 });
 
 
-app.get('/api/ticketsUpdate', async (req, res) => {
-  const token = req.query.token;
-  const action = req.query.action;
+app.post('/api/ticketsUpdate', async (req, res) => {
+  const token = req.body.token;
+  const ticketId = req.body.ticketId;
+  const action = req.body.action;
 
-  const email = await sessions.checkPermissionToReadTicket(token);
+  const can = await sessions.interactWithTicket(token, action, ticketId);
 
-  if (!email) {
+  if (!can) {
     res.status(500);
-    res.json({message:'Invalid token '+email});
+    res.json({message:'Invalid token'});
     return 1;
   }
 
-  tickets.getAll(email).then(data => {
-    res.status(200);
-    res.json(data);
-    return 0;
-  });
+  tickets.performAction(ticketId, action);
 });
 
 
@@ -116,6 +112,19 @@ app.get('/api/users', async (req, res) => {
     }
   });
 });
+
+app.get('/api/userCheck', async (req, res) => {
+  const userRequest = {token: req.query.token};
+
+  sessions.checkToken(userRequest.token).then(async data => {
+    res.status(200);
+    res.json(data);
+  }).catch(err => {
+    res.status(500);
+    res.json(err);
+  });
+});
+
 
 
 app.get('/api/usersReg', async (req, res) => {

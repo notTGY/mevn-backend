@@ -22,7 +22,20 @@ const tickets = db.collection('tickets');
    await tickets.insert(ticket);
  }
 
+ async function performAction (ticketId, action) {
+   if (action.type == 'delete') {
+     await tickets.remove({_id:ticketId});
+   }
+   if (action.type == 'sendBack') {
+    const tick = await tickets.findOne({_id:ticketId});
+    const newText = tick.text + '\n' + action.text;
+
+    await tickets.update({_id:ticketId}, { $set: {text: newText} })
+   }
+ }
+
  module.exports = {
    getAll,
-   create
+   create,
+   performAction
  }

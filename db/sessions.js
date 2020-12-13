@@ -1,6 +1,7 @@
 const db = require('./connection');
 
 const sessions = db.collection('sessions');
+const tickets = db.collection('tickets');
 
 async function createNewSession(email) {
   const start = (new Date()).getTime();
@@ -41,9 +42,57 @@ async function checkPermissionToCreateTicket(token) {
   return cache.email;
 }
 
+async function interactWithTicket(token, action, ticketId) {
+  const cache = await sessions.findOne({token:token});
+
+  if (cache == {} || cache == null) {
+    return 0;
+  }
+  const now = (new Date()).getTime();
+  if (cache.finish_time < now) {
+    return 0;
+  }
+  const tick = await tickets.findOne({_id:ticketId});
+
+  if (tick == {} || tick == null) {
+    return 0;
+  }
+
+  if (tick.email == cache.email) {
+    return 1;
+  }
+
+  if (tick.email_to == cache.email) {
+    if (!action) {
+      return 0;
+    }
+    if (action.type == 'sendBack') {
+      if (action.text) {
+        return 1;
+      }
+    }
+  }
+  return 0;
+}
+
+
+async function checkToken(token) {
+  const cache = await sessions.findOne({token:token});
+
+  if (cache == {} || cache == null) {
+    return 0;
+  }
+  const now = (new Date()).getTime();
+  if (cache.finish_time < now) {
+    return 0;
+  }
+  return cache.email;
+}
 
 module.exports = {
   checkPermissionToReadTicket,
   createNewSession,
-  checkPermissionToCreateTicket
+  checkPermissionToCreateTicket,
+  interactWithTicket,
+  checkToken
 };
